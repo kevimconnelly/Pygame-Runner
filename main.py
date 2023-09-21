@@ -16,6 +16,7 @@ snail_x_pos = 600
 
 player_surf = pygame.image.load(
     'graphics/player/player_walk_1.png').convert_alpha()
+player_rect = player_surf.get_rect(topleft=(80, 200))
 
 while True:
     for event in pygame.event.get():
