@@ -14,6 +14,9 @@ text_surface = test_font.render('My game', False, 'Black')
 snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
 snail_x_pos = 600
 
+player_surf = pygame.image.load(
+    'graphics/player/player_walk_1.png').convert_alpha()
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -27,6 +30,7 @@ while True:
     if snail_x_pos < -100:
         snail_x_pos = 800
     screen.blit(snail_surface, (snail_x_pos, 250))
+    screen.blit(player_surf, (80, 200))
 
     pygame.display.update()
     clock.tick(60)
