@@ -26,7 +26,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and player_rect.bottom == 300:
             if player_rect.collidepoint(event.pos):
                 player_gravity = -20
 
@@ -52,6 +52,11 @@ while True:
     if player_rect.bottom >= 300:
         player_rect.bottom = 300
     screen.blit(player_surf, player_rect)
+
+    # Collision
+    if snail_rect.colliderect(player_rect):
+        pygame.quit()
+        exit()
 
     pygame.display.update()
     clock.tick(60)
