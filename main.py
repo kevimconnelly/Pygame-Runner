@@ -3,7 +3,7 @@ from sys import exit
 
 
 def display_score():
-    current_time = pygame.time.get_ticks()
+    current_time = (int(pygame.time.get_ticks() / 1000) - start_time)
     score_surf = test_font.render(f'{current_time}', False, (64, 64, 64))
     score_rect = score_surf.get_rect(center=(400, 50))
     screen.blit(score_surf, score_rect)
@@ -15,6 +15,7 @@ pygame.display.set_caption('Runner')
 clock = pygame.time.Clock()
 test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 game_active = True
+start_time = 0
 
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
@@ -48,6 +49,7 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rect.left = 800
+                start_time = int(pygame.time.get_ticks() / 1000)
 
     if game_active:
         screen.blit(sky_surface, (0, 0))
