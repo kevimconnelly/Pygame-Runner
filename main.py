@@ -4,7 +4,8 @@ from sys import exit
 
 def display_score():
     current_time = (int(pygame.time.get_ticks() / 1000) - start_time)
-    score_surf = test_font.render(f'{current_time}', False, (64, 64, 64))
+    score_surf = test_font.render(
+        f'Score: {current_time}', False, (64, 64, 64))
     score_rect = score_surf.get_rect(center=(400, 50))
     screen.blit(score_surf, score_rect)
 
@@ -14,7 +15,7 @@ screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption('Runner')
 clock = pygame.time.Clock()
 test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
-game_active = True
+game_active = False
 start_time = 0
 
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
@@ -30,6 +31,14 @@ player_surf = pygame.image.load(
     'graphics/player/player_walk_1.png').convert_alpha()
 player_rect = player_surf.get_rect(midbottom=(80, 300))
 player_gravity = 0
+
+# Intro screen
+player_stand = pygame.image.load(
+    'graphics/player/player_stand.png').convert_alpha()
+player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
+player_stand_rect = player_stand.get_rect(center=(400, 200))
+
+game_name = test_font.render('Pixel Runner', False, (111, 196, 169))
 
 while True:
     for event in pygame.event.get():
@@ -77,7 +86,8 @@ while True:
             game_active = False
 
     else:
-        screen.fill('Yellow')
+        screen.fill((94, 129, 162))
+        screen.blit(player_stand, player_stand_rect)
 
     pygame.display.update()
     clock.tick(60)
