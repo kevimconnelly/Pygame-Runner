@@ -19,6 +19,9 @@ def obstacle_movement(obstacle_list):
 
             screen.blit(snail_surface, obstacle_rect)
 
+        obstacle_list = [
+            obstacle for obstacle in obstacle_list if obstacle.x > -100]
+
         return obstacle_list
     else:
         return []
