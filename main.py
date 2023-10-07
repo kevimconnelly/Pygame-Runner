@@ -38,6 +38,18 @@ def collisions(player, obstacles):
     return True
 
 
+def player_animation():
+    global player_surf, player_index
+
+    if player_rect.bottom < 300:
+        player_surf = player_jump
+    else:
+        player_index += 0.1
+        if player_index >= len(player_walk):
+            player_index = 0
+        player_surf = player_walk[int(player_index)]
+
+
 pygame.init()
 screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption('Runner')
@@ -60,8 +72,16 @@ fly_surface = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
 
 obstacle_rect_list = []
 
-player_surf = pygame.image.load(
+player_walk_1 = pygame.image.load(
     'graphics/player/player_walk_1.png').convert_alpha()
+player_walk_2 = pygame.image.load(
+    'graphics/player/player_walk_2.png').convert_alpha()
+player_walk = [player_walk_1, player_walk_2]
+player_index = 0
+player_jump = pygame.image.load(
+    'graphics/player/jump.png').convert_alpha()
+
+player_surf = player_walk[player_index]
 player_rect = player_surf.get_rect(midbottom=(80, 300))
 player_gravity = 0
 
@@ -94,7 +114,7 @@ while True:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player_rect.bottom == 300:
-                    player_gravity = -20
+                    player_gravity = -19
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
@@ -128,6 +148,7 @@ while True:
         player_rect.y += player_gravity
         if player_rect.bottom >= 300:
             player_rect.bottom = 300
+        player_animation()
         screen.blit(player_surf, player_rect)
 
         # Obstacle movement
@@ -139,11 +160,14 @@ while True:
     else:
         screen.fill((94, 129, 162))
         screen.blit(player_stand, player_stand_rect)
+        obstacle_rect_list.clear()
 
         score_message = test_font.render(
             f'Your score: {score}', False, (111, 196, 169))
         score_message_rect = score_message.get_rect(center=(400, 330))
         screen.blit(game_name, game_name_rect)
+        player_rect.midbottom = (80, 300)
+        player_gravity = 0
 
         if score == 0:
             screen.blit(game_message, game_message_rect)
