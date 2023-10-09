@@ -2,8 +2,6 @@ import pygame
 from sys import exit
 from random import randint
 
-#from pygame.sprite import _Group
-
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -11,6 +9,22 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(
             'graphics/player/player_walk_1.png').convert_alpha()
         self.rect = self.image.get_rect(midbottom=(200, 300))
+        self.gravity = 0
+
+    def player_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
+            self.gravity = -20
+
+    def apply_gravity(self):
+        self.gravity += 1
+        self.rect.y += self.gravity
+        if self.rect.bottom >= 300:
+            self.rect.bottom = 300
+
+    def update(self):
+        self.player_input()
+        self.apply_gravity()
 
 
 def display_score():
@@ -195,6 +209,7 @@ while True:
         player_animation()
         screen.blit(player_surf, player_rect)
         player.draw(screen)
+        player.update()
 
         # Obstacle movement
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
