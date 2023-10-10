@@ -22,10 +22,14 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom=(200, 300))
         self.gravity = 0
 
+        self.jump_sound = pygame.mixer.Sound('audio/jump.mp3')
+        self.jump_sound.set_volume(0.5)
+
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
             self.gravity = -20
+            self.jump_sound.play()
 
     def apply_gravity(self):
         self.gravity += 1
@@ -149,6 +153,7 @@ test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 game_active = False
 start_time = 0
 score = 0
+bg_Music = pygame.mixer.Sound('audio/music.wav')
 
 player = pygame.sprite.GroupSingle()
 player.add(Player())
@@ -215,6 +220,7 @@ fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer, 200)
 
 while True:
+    bg_Music.play(loops=-1)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
