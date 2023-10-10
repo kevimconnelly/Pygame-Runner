@@ -2,7 +2,7 @@ from typing import Any
 import pygame
 import random
 from sys import exit
-from random import randint
+from random import randint, choice
 
 
 class Player(pygame.sprite.Sprite):
@@ -228,7 +228,7 @@ while True:
 
         if game_active:
             if event.type == obstacle_timer and game_active:
-                obstacle_group.add(Obstacle('fly'))
+                obstacle_group.add(Obstacle(choice(['fly', 'snail', 'snail'])))
                 # if randint(0, 2):
                 # obstacle_rect_list.append(
                 # snail_surface.get_rect(bottomright=(randint(900, 1000), 300)))
@@ -264,12 +264,12 @@ while True:
         screen.blit(snail_surface, snail_rect)
 
         # Player
-        player_gravity += 1
-        player_rect.y += player_gravity
-        if player_rect.bottom >= 300:
-            player_rect.bottom = 300
-        player_animation()
-        screen.blit(player_surf, player_rect)
+        #player_gravity += 1
+        #player_rect.y += player_gravity
+        # if player_rect.bottom >= 300:
+        #player_rect.bottom = 300
+        # player_animation()
+        #screen.blit(player_surf, player_rect)
         player.draw(screen)
         player.update()
 
