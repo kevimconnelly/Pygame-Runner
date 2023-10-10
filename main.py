@@ -121,6 +121,14 @@ def collisions(player, obstacles):
     return True
 
 
+def collision_sprite():
+    if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
+        obstacle_group.empty()
+        return False
+    else:
+        return True
+
+
 def player_animation():
     global player_surf, player_index
 
@@ -280,7 +288,8 @@ while True:
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
 
         # Collision
-        game_active = collisions(player_rect, obstacle_rect_list)
+        game_active = collision_sprite()
+        # game_active = collisions(player_rect, obstacle_rect_list)
 
     else:
         screen.fill((94, 129, 162))
